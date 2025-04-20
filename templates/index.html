@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block title %}Übersicht{% endblock %}
+
+{% block content %}
+    <h2 class="mb-4">Aktive Mitarbeitende</h2>
+    <a href="{{ url_for('onboard') }}" class="btn btn-primary mb-3">+ Neuer Onboarding-Eintrag</a>
+
+    {% if employees %}
+    <table class="table table-striped bg-white shadow-sm">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Abteilung</th>
+                <th>Startdatum</th>
+                <th>Aktion</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for emp in employees %}
+            <tr>
+                <td>{{ emp.fullname }}</td>
+                <td>{{ emp.department }}</td>
+                <td>{{ emp.start_date.strftime('%d.%m.%Y') if emp.start_date else '-' }}</td>
+                <td>
+                    <a href="{{ url_for('offboard', id=emp.id) }}" class="btn btn-outline-danger btn-sm">Offboard</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+        <p class="text-muted">Noch keine Mitarbeitenden eingetragen.</p>
+    {% endif %}
+{% endblock %}
