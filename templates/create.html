@@ -45,7 +45,6 @@
                 <option value="IT">IT</option>
                 <option value="HR">HR</option>
                 <option value="Produktion">Produktion</option>
-                <!-- Weitere Abteilungen je nach Bedarf -->
             </select>
         </div>
         <div class="mb-3">
@@ -53,17 +52,12 @@
             <input type="date" class="form-control" id="start_date" name="start_date">
         </div>
         <div class="mb-3">
-            <label for="end_date" class="form-label">Austrittsdatum (falls bekannt)</label>
-            <input type="date" class="form-control" id="end_date" name="end_date">
-        </div>
-        <div class="mb-3">
             <label for="location" class="form-label">Niederlassung</label>
             <select class="form-select" id="location" name="location">
                 <option value="">Bitte auswählen</option>
-                <option value="Offenburg">Offenburg</option>
-                <option value="Lahr">Lahr</option>
-                <option value="Freiburg">Freiburg</option>
-                <!-- Weitere Standorte -->
+                <option value="Berlin">Berlin</option>
+                <option value="Hamburg">Hamburg</option>
+                <option value="München">München</option>
             </select>
         </div>
         <div class="mb-3">
@@ -89,10 +83,18 @@
         </div>
         <div class="mb-3">
             <label for="homeoffice" class="form-label">Homeoffice</label>
-            <select class="form-select" id="homeoffice" name="homeoffice">
+            <select class="form-select" id="homeoffice" name="homeoffice" onchange="toggleHomeofficeOptions()">
                 <option value="">Bitte auswählen</option>
                 <option value="Ja">Ja</option>
                 <option value="Nein">Nein</option>
+            </select>
+        </div>
+        <div class="mb-3" id="homeoffice-options" style="display: none;">
+            <label for="homeoffice_detail" class="form-label">Homeoffice Regelung</label>
+            <select class="form-select" id="homeoffice_detail" name="homeoffice_detail">
+                <option value="">Bitte auswählen</option>
+                <option value="1-5 Tage">1–5 Tage</option>
+                <option value="Nach Absprache">Nach Absprache</option>
             </select>
         </div>
     </fieldset>
@@ -100,4 +102,12 @@
     <button type="submit" class="btn btn-success">Speichern</button>
     <a href="{{ url_for('index') }}" class="btn btn-secondary">Zurück</a>
 </form>
+
+<script>
+    function toggleHomeofficeOptions() {
+        const homeoffice = document.getElementById("homeoffice").value;
+        const detail = document.getElementById("homeoffice-options");
+        detail.style.display = (homeoffice === "Ja") ? "block" : "none";
+    }
+</script>
 {% endblock %}
