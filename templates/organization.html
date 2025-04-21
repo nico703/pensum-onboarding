@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% block title %}Organisation – Onboarding{% endblock %}
+
+{% block content %}
+<h2>4. Organisation</h2>
+
+<form method="POST" class="mt-4 bg-white p-4 rounded shadow-sm">
+
+    <fieldset class="mb-4">
+        <legend>Zugänge & Ausstattung</legend>
+
+        <div class="form-check mb-2">
+            <input class="form-check-input" type="checkbox" name="schlüssel_chip" id="schlüssel_chip">
+            <label class="form-check-label" for="schlüssel_chip">Schlüssel / Chip</label>
+        </div>
+
+        <div class="form-check mb-2">
+            <input class="form-check-input" type="checkbox" name="parkplatz" id="parkplatz">
+            <label class="form-check-label" for="parkplatz">Parkplatz</label>
+        </div>
+
+        <div class="form-check mb-2">
+            <input class="form-check-input" type="checkbox" name="pkw" id="pkw">
+            <label class="form-check-label" for="pkw">Dienstwagen (PKW)</label>
+        </div>
+
+        <div class="mb-3">
+            <label for="tankkarte" class="form-label">Tankkarte</label>
+            <select class="form-select" name="tankkarte" id="tankkarte">
+                <option value="">Bitte auswählen</option>
+                <option value="Ja">Ja</option>
+                <option value="Nein">Nein</option>
+            </select>
+        </div>
+
+        <div class="form-check mb-2">
+            <input class="form-check-input" type="checkbox" name="dsgvo_schulung" id="dsgvo_schulung">
+            <label class="form-check-label" for="dsgvo_schulung">DSGVO-Schulung</label>
+        </div>
+
+        <div class="form-check mb-2">
+            <input class="form-check-input" type="checkbox" name="visitenkarten" id="visitenkarten">
+            <label class="form-check-label" for="visitenkarten">Visitenkarten</label>
+        </div>
+    </fieldset>
+
+    <button type="submit" class="btn btn-success">Weiter</button>
+    <a href="{{ url_for('equipment', id=employee.id) }}" class="btn btn-secondary">Zurück</a>
+</form>
+{% endblock %}

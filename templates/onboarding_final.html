@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block title %}Einarbeitung – Onboarding{% endblock %}
+
+{% block content %}
+<h2>5. Einarbeitung</h2>
+
+<form method="POST" class="mt-4 bg-white p-4 rounded shadow-sm">
+
+    <fieldset class="mb-4">
+        <legend>Einarbeitungsphasen</legend>
+
+        {% for bereich in ["Admin", "BuHa", "Vertrieb", "Recruiting", "Marketing"] %}
+        <div class="mb-3">
+            <label class="form-label">{{ bereich }}</label>
+            <div class="row">
+                <div class="col-md-4">
+                    <input type="text" class="form-control" name="{{ bereich.lower() }}_durch" placeholder="durch">
+                </div>
+                <div class="col-md-4">
+                    <input type="date" class="form-control" name="{{ bereich.lower() }}_von" placeholder="von">
+                </div>
+                <div class="col-md-4">
+                    <input type="date" class="form-control" name="{{ bereich.lower() }}_bis" placeholder="bis">
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </fieldset>
+
+    <button type="submit" class="btn btn-success">Onboarding abschließen</button>
+    <a href="{{ url_for('organization', id=employee.id) }}" class="btn btn-secondary">Zurück</a>
+</form>
+{% endblock %}

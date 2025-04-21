@@ -7,3 +7,24 @@ body {
     background-color: #005b96;
     border-color: #005b96;
 }
+.stepper {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 2rem;
+    padding: 0 10px;
+  }
+  .step {
+    flex: 1;
+    text-align: center;
+    padding: 8px 10px;
+    background-color: #e9ecef;
+    border-radius: 20px;
+    margin: 0 5px;
+    color: #6c757d;
+    font-weight: 500;
+  }
+  .step.active {
+    background-color: #c91e2b; /* Pensum-Rot */
+    color: white;
+    font-weight: bold;
+  }
