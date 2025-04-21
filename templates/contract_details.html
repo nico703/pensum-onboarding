@@ -12,37 +12,25 @@
     </div>
 
     <h2>Vertragsdetails</h2>
-    <form method="POST" action="{{ url_for('contract_details') }}" class="mt-4 bg-white p-4 rounded shadow-sm">
-
-        <div class="mb-3">
-            <label for="department" class="form-label">Abteilung</label>
-            <select class="form-select" id="department" name="department">
-                <option value="">Bitte auswählen</option>
-                <option value="Vertrieb">Vertrieb</option>
-                <option value="Marketing">Marketing</option>
-                <option value="IT">IT</option>
-                <option value="HR">HR</option>
-                <option value="Produktion">Produktion</option>
-            </select>
-        </div>
+    <form method="POST" class="mt-4 bg-white p-4 rounded shadow-sm">
 
         <div class="mb-3">
             <label for="position" class="form-label">Position</label>
-            <input type="text" class="form-control" id="position" name="position">
+            <input type="text" class="form-control" id="position" name="position" value="{{ employee.position or '' }}">
         </div>
 
         <div class="mb-3">
             <label for="start_date" class="form-label">Eintrittsdatum</label>
-            <input type="date" class="form-control" id="start_date" name="start_date">
+            <input type="date" class="form-control" id="start_date" name="start_date" value="{{ employee.start_date.strftime('%Y-%m-%d') if employee.start_date else '' }}">
         </div>
 
         <div class="mb-3">
             <label for="location" class="form-label">Niederlassung</label>
             <select class="form-select" id="location" name="location">
                 <option value="">Bitte auswählen</option>
-                <option value="Berlin">Berlin</option>
-                <option value="Hamburg">Hamburg</option>
-                <option value="München">München</option>
+                {% for city in ["Berlin", "Hamburg", "München"] %}
+                <option value="{{ city }}" {% if employee.location == city %}selected{% endif %}>{{ city }}</option>
+                {% endfor %}
             </select>
         </div>
 
@@ -50,33 +38,33 @@
             <label for="employment_type" class="form-label">Beschäftigungsart</label>
             <select class="form-select" id="employment_type" name="employment_type">
                 <option value="">Bitte auswählen</option>
-                <option value="Vollzeit">Vollzeit</option>
-                <option value="Teilzeit">Teilzeit</option>
-                <option value="Minijob">Minijob</option>
+                {% for art in ["Vollzeit", "Teilzeit", "Minijob"] %}
+                <option value="{{ art }}" {% if employee.employment_type == art %}selected{% endif %}>{{ art }}</option>
+                {% endfor %}
             </select>
         </div>
 
         <div class="mb-3">
             <label for="vacation_days" class="form-label">Urlaubstage</label>
-            <input type="number" class="form-control" id="vacation_days" name="vacation_days">
+            <input type="number" class="form-control" id="vacation_days" name="vacation_days" value="{{ employee.vacation_days or '' }}">
         </div>
 
         <div class="mb-3">
             <label for="homeoffice" class="form-label">Homeoffice</label>
             <select class="form-select" id="homeoffice" name="homeoffice" onchange="toggleHomeofficeOptions()">
                 <option value="">Bitte auswählen</option>
-                <option value="Ja">Ja</option>
-                <option value="Nein">Nein</option>
+                <option value="Ja" {% if employee.homeoffice == 'Ja' %}selected{% endif %}>Ja</option>
+                <option value="Nein" {% if employee.homeoffice == 'Nein' %}selected{% endif %}>Nein</option>
             </select>
         </div>
 
-        <div class="mb-3" id="homeoffice-options" style="display: none;">
+        <div class="mb-3" id="homeoffice-options" style="display: {{ 'block' if employee.homeoffice == 'Ja' else 'none' }}">
             <label for="homeoffice_detail" class="form-label">Homeoffice Regelung</label>
             <select class="form-select" id="homeoffice_detail" name="homeoffice_detail">
                 <option value="">Bitte auswählen</option>
-                <option value="1–2 Tage">1–2 Tage</option>
-                <option value="3 Tage">3 Tage</option>
-                <option value="Nach Absprache">Nach Absprache</option>
+                {% for opt in ["1–2 Tage", "3 Tage", "Nach Absprache"] %}
+                <option value="{{ opt }}" {% if employee.homeoffice_detail == opt %}selected{% endif %}>{{ opt }}</option>
+                {% endfor %}
             </select>
         </div>
 

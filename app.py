@@ -52,7 +52,14 @@ def create():
 def contract_details(id):
     employee = Employee.query.get_or_404(id)
     if request.method == "POST":
-        # Vertragsdaten hier speichern, sobald Felder in models.py definiert sind
+        employee.position = request.form.get("position")
+        employee.location = request.form.get("location")
+        employee.employment_type = request.form.get("employment_type")
+        employee.vacation_days = request.form.get("vacation_days")
+        employee.homeoffice = request.form.get("homeoffice")
+        employee.homeoffice_detail = request.form.get("homeoffice_detail")
+
+        db.session.commit()
         return redirect(url_for("equipment", id=id))
     return render_template("contract_details.html", employee=employee)
 

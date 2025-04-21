@@ -6,13 +6,23 @@ db = SQLAlchemy()
 class Employee(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     fullname = db.Column(db.String(100), nullable=False)
-    email = db.Column(db.String(100), nullable=False)
-    birthdate = db.Column(db.Date)
-    address = db.Column(db.String(200))
-    mobile = db.Column(db.String(50))
+    email = db.Column(db.String(120), nullable=False)
     department = db.Column(db.String(100))
     start_date = db.Column(db.Date)
     is_active = db.Column(db.Boolean, default=True)
+
+    # Neue Vertragsdetails
+    position = db.Column(db.String(100))
+    location = db.Column(db.String(100))
+    employment_type = db.Column(db.String(50))
+    vacation_days = db.Column(db.Integer)
+    homeoffice = db.Column(db.String(10))
+    homeoffice_detail = db.Column(db.String(50))
+
+    # Optional: Weitere persönliche Daten
+    birthdate = db.Column(db.Date)
+    address = db.Column(db.String(200))
+    mobile = db.Column(db.String(50))
 
     # Step 1: Personendaten
     fullname = db.Column(db.String(100), nullable=False)
