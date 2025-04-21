@@ -23,6 +23,10 @@ def create():
     if request.method == "POST":
         fullname = request.form["fullname"]
         email = request.form["email"]
+        birthdate_str = request.form.get("birthdate")
+        birthdate = datetime.strptime(birthdate_str, "%Y-%m-%d").date() if birthdate_str else None
+        address = request.form.get("address")
+        mobile = request.form.get("mobile")
         department = request.form["department"]
         start_date_str = request.form["start_date"]
         start_date = datetime.strptime(start_date_str, "%Y-%m-%d").date() if start_date_str else None
@@ -30,6 +34,9 @@ def create():
         new_emp = Employee(
             fullname=fullname,
             email=email,
+            birthdate=birthdate,
+            address=address,
+            mobile=mobile,
             department=department,
             start_date=start_date
         )

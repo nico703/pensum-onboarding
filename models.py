@@ -5,7 +5,13 @@ db = SQLAlchemy()
 
 class Employee(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    fullname = db.Column(db.String(100), nullable=False)
+    email = db.Column(db.String(100), nullable=False)
+    birthdate = db.Column(db.Date)
+    address = db.Column(db.String(200))
+    mobile = db.Column(db.String(50))
+    department = db.Column(db.String(100))
+    start_date = db.Column(db.Date)
     is_active = db.Column(db.Boolean, default=True)
 
     # Step 1: Personendaten
