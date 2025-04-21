@@ -1,114 +1,33 @@
 {% extends "base.html" %}
 
-{% block title %}Onboarding{% endblock %}
+{% block title %}Neuen Mitarbeitenden anlegen{% endblock %}
 
 {% block content %}
-<h2>Neuen Mitarbeitenden anlegen</h2>
-<form method="POST" class="mt-4 bg-white p-4 rounded shadow-sm">
+<h2 class="mb-4">Neuen Mitarbeitenden anlegen</h2>
 
-    <!-- PERSONENBEZOGENE DATEN -->
-    <fieldset class="mb-4">
-        <legend>Personaldaten</legend>
+<form method="POST">
+    <div class="card mb-4">
+        <div class="card-header">Personaldaten</div>
+        <div class="card-body">
+            <div class="mb-3">
+                <label for="fullname" class="form-label">Vollständiger Name</label>
+                <input type="text" class="form-control" id="fullname" name="fullname" required>
+            </div>
+            <div class="mb-3">
+                <label for="email" class="form-label">E-Mail-Adresse</label>
+                <input type="email" class="form-control" id="email" name="email" required>
+            </div>
+            <div class="mb-3">
+                <label for="department" class="form-label">Abteilung</label>
+                <input type="text" class="form-control" id="department" name="department" required>
+            </div>
+            <div class="mb-3">
+                <label for="start_date" class="form-label">Startdatum</label>
+                <input type="date" class="form-control" id="start_date" name="start_date">
+            </div>
+        </div>
+    </div>
 
-        <div class="mb-3">
-            <label for="fullname" class="form-label">Vollständiger Name</label>
-            <input type="text" class="form-control" id="fullname" name="fullname" required>
-        </div>
-        <div class="mb-3">
-            <label for="birthdate" class="form-label">Geburtsdatum</label>
-            <input type="date" class="form-control" id="birthdate" name="birthdate">
-        </div>
-        <div class="mb-3">
-            <label for="address" class="form-label">Adresse</label>
-            <input type="text" class="form-control" id="address" name="address">
-        </div>
-        <div class="mb-3">
-            <label for="mobile" class="form-label">Mobilnummer (privat)</label>
-            <input type="tel" class="form-control" id="mobile" name="mobile">
-        </div>
-        <div class="mb-3">
-            <label for="private_email" class="form-label">E-Mail-Adresse (privat)</label>
-            <input type="email" class="form-control" id="private_email" name="private_email">
-        </div>
-    </fieldset>
-
-    <!-- VERTRAGSDETAILS -->
-    <fieldset class="mb-4">
-        <legend>Vertragsdetails</legend>
-
-        <div class="mb-3">
-            <label for="department" class="form-label">Abteilung</label>
-            <select class="form-select" id="department" name="department">
-                <option value="">Bitte auswählen</option>
-                <option value="Vertrieb">Vertrieb</option>
-                <option value="Marketing">Marketing</option>
-                <option value="IT">IT</option>
-                <option value="HR">HR</option>
-                <option value="Produktion">Produktion</option>
-            </select>
-        </div>
-        <div class="mb-3">
-            <label for="start_date" class="form-label">Eintrittsdatum</label>
-            <input type="date" class="form-control" id="start_date" name="start_date">
-        </div>
-        <div class="mb-3">
-            <label for="location" class="form-label">Niederlassung</label>
-            <select class="form-select" id="location" name="location">
-                <option value="">Bitte auswählen</option>
-                <option value="Berlin">Berlin</option>
-                <option value="Hamburg">Hamburg</option>
-                <option value="München">München</option>
-            </select>
-        </div>
-        <div class="mb-3">
-            <label for="contact_person" class="form-label">Ansprechpartner</label>
-            <input type="text" class="form-control" id="contact_person" name="contact_person">
-        </div>
-        <div class="mb-3">
-            <label for="position" class="form-label">Position</label>
-            <input type="text" class="form-control" id="position" name="position">
-        </div>
-        <div class="mb-3">
-            <label for="employment_type" class="form-label">Beschäftigungsart</label>
-            <select class="form-select" id="employment_type" name="employment_type">
-                <option value="">Bitte auswählen</option>
-                <option value="Vollzeit">Vollzeit</option>
-                <option value="Teilzeit">Teilzeit</option>
-                <option value="Minijob">Minijob</option>
-            </select>
-        </div>
-        <div class="mb-3">
-            <label for="vacation_days" class="form-label">Urlaubstage</label>
-            <input type="number" class="form-control" id="vacation_days" name="vacation_days">
-        </div>
-        <div class="mb-3">
-            <label for="homeoffice" class="form-label">Homeoffice</label>
-            <select class="form-select" id="homeoffice" name="homeoffice" onchange="toggleHomeofficeOptions()">
-                <option value="">Bitte auswählen</option>
-                <option value="Ja">Ja</option>
-                <option value="Nein">Nein</option>
-            </select>
-        </div>
-        <div class="mb-3" id="homeoffice-options" style="display: none;">
-            <label for="homeoffice_detail" class="form-label">Homeoffice Regelung</label>
-            <select class="form-select" id="homeoffice_detail" name="homeoffice_detail">
-                <option value="">Bitte auswählen</option>
-                <option value="1-2 Tage">1–2 Tage</option>
-                <option value="3 Tage">3 Tage</option>
-                <option value="Nach Absprache">Nach Absprache</option>
-            </select>
-        </div>
-    </fieldset>
-
-    <button type="submit" class="btn btn-success">Speichern</button>
-    <a href="{{ url_for('index') }}" class="btn btn-secondary">Zurück</a>
+    <button type="submit" class="btn btn-primary">Weiter</button>
 </form>
-
-<script>
-    function toggleHomeofficeOptions() {
-        const homeoffice = document.getElementById("homeoffice").value;
-        const detail = document.getElementById("homeoffice-options");
-        detail.style.display = (homeoffice === "Ja") ? "block" : "none";
-    }
-</script>
 {% endblock %}
