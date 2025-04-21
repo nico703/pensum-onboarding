@@ -16,25 +16,34 @@ def index():
     employees = Employee.query.filter_by(is_active=True).all()
     return render_template("index.html", employees=employees)
 
+from datetime import datetime
+
 @app.route("/onboard", methods=["GET", "POST"])
 def onboard():
     if request.method == "POST":
         fullname = request.form["fullname"]
         email = request.form["email"]
         department = request.form["department"]
-        start_date = request.form["start_date"]
-        notes = request.form["notes"]
+        notes = request.form.get("notes", "")
 
+        # Datum umwandeln, wenn angegeben
+        start_date_str = request.form["start_date"]
+        start_date = datetime.strptime(start_date_str, "%Y-%m-%d").date() if start_date_str else None
+
+        # Neues Objekt erstellen
         new_emp = Employee(
             fullname=fullname,
             email=email,
             department=department,
-            start_date=start_date or None,
+            start_date=start_date,
             notes=notes
         )
         db.session.add(new_emp)
         db.session.commit()
-        return redirect(url_for("index"))
+
+        # Weiterleiten zur Equipment-Seite
+        return redirect(url_for("equipment", id=new_emp.id))
+
     return render_template("create.html")
 
 @app.route("/offboard/<int:id>")
@@ -42,7 +51,7 @@ def offboard(id):
     employee = Employee.query.get_or_404(id)
     employee.is_active = False
     db.session.commit()
-    return redirect(url_for("equipment", id=new_emp.id))
+    return redirect(url_for("index"))
 
 # Easter Egg
 @app.route("/about-dev")
