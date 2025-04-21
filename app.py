@@ -84,6 +84,13 @@ def offboard(id):
     db.session.commit()
     return redirect(url_for("index"))
 
+# Admin
+@app.route("/admin")
+def admin():
+    active_employees = Employee.query.filter_by(is_active=True).all()
+    recent_employees = Employee.query.order_by(Employee.id.desc()).limit(5).all()
+    return render_template("admin.html", active_employees=active_employees, recent_employees=recent_employees)
+
 # Easter Egg
 @app.route("/about-dev")
 def about_dev():

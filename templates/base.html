@@ -10,6 +10,8 @@
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container-fluid">
             <a class="navbar-brand" href="/">Pensum Onboarding</a>
+            <a class="navbar-brand" href="/">Pensum Onboarding</a>
+            <a class="nav-link text-white" href="{{ url_for('admin') }}">Admin</a>
         </div>
     </nav>
 
@@ -25,6 +27,6 @@
     <div class="step {% if step == 4 %}active{% endif %}">4. Organisation</div>
     <div class="step {% if step == 5 %}active{% endif %}">5. Einarbeitung</div>
   </div>
-  
+
 </body>
 </html>

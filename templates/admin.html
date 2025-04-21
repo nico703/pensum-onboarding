@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% block title %}Admin-Dashboard{% endblock %}
+
+{% block content %}
+<h2 class="mb-4">Admin Dashboard</h2>
+
+<div class="row mb-4">
+    <div class="col-md-4">
+        <div class="card text-white bg-primary mb-3">
+            <div class="card-body">
+                <h5 class="card-title">Aktive Mitarbeitende</h5>
+                <p class="card-text display-6">{{ active_employees|length }}</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card text-white bg-success mb-3">
+            <div class="card-body">
+                <h5 class="card-title">Letzte Einträge</h5>
+                <p class="card-text display-6">{{ recent_employees|length }}</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<h4>Zuletzt erstellt</h4>
+<table class="table table-striped bg-white shadow-sm">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Abteilung</th>
+            <th>Startdatum</th>
+            <th>Status</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for emp in recent_employees %}
+        <tr>
+            <td>{{ emp.fullname }}</td>
+            <td>{{ emp.department }}</td>
+            <td>{{ emp.start_date.strftime('%d.%m.%Y') if emp.start_date else '-' }}</td>
+            <td>{{ "Aktiv" if emp.is_active else "Offboarded" }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<a href="{{ url_for('create') }}" class="btn btn-primary mt-4">+ Neuer Onboarding-Eintrag</a>
+{% endblock %}
