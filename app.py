@@ -42,7 +42,7 @@ def offboard(id):
     employee = Employee.query.get_or_404(id)
     employee.is_active = False
     db.session.commit()
-    return redirect(url_for("index"))
+    return redirect(url_for("equipment", id=new_emp.id))
 
 # Easter Egg
 @app.route("/about-dev")
