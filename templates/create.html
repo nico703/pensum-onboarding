@@ -35,8 +35,8 @@
         </div>
 
         <div class="mb-3">
-            <label for="email" class="form-label">E-Mail (privat)</label>
-            <input type="email" class="form-control" id="email" name="email" required>
+            <label for="private_email" class="form-label">E-Mail (privat)</label>
+            <input type="email" class="form-control" id="private_email" name="private_email" required>
         </div>
         
         <div class="mb-3">
@@ -44,7 +44,7 @@
             <div>
                 {% for department in ['Pensum GmbH', 'High Potentials', 'Fahrdienst', 'MePeKo', 'MePeKo Experts', 'Reinigung'] %}
                 <div class="form-check">
-                    <input class="form-check-input" type="checkbox" name="departments" value="{{ department }}" id="dep_{{ loop.index }}">
+                    <input class="form-check-input" type="checkbox" name="department" value="{{ department }}" id="dep_{{ loop.index }}">
                     <label class="form-check-label" for="dep_{{ loop.index }}">{{ department }}</label>
                 </div>
                 {% endfor %}
