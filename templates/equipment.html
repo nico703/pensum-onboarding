@@ -1,170 +1,115 @@
 {% extends "base.html" %}
-
-{% block title %}Equipment & Zugänge{% endblock %}
+{% block title %}Equipment{% endblock %}
 
 {% block content %}
 <div class="container mt-5">
     <div class="progress mb-4" style="height: 25px;">
         <div class="progress-bar bg-success" role="progressbar" style="width: 60%;" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100">
-            Schritt 3 von 5 – Equipment & Software
+            Schritt 3 von 5 – IT & Ausstattung
         </div>
     </div>
 
-    <h2>Hardware</h2>
-    <form method="POST" action="{{ url_for('equipment', id=employee.id) }}" class="bg-white p-4 rounded shadow-sm">
-
+    <h2>IT & Ausstattung</h2>
+    <form method="POST" class="mt-4 bg-white p-4 rounded shadow-sm">
         <!-- Laptop -->
         <div class="mb-3">
-            <label class="form-label">Laptop</label>
-            <select name="laptop" class="form-select">
+            <label class="form-label">Laptop benötigt?</label>
+            <select class="form-select" name="laptop_needed" id="laptop_needed" onchange="toggleLaptopFields()">
                 <option value="">Bitte auswählen</option>
-                <option>Ja</option>
-                <option>Nein</option>
+                <option value="Ja">Ja</option>
+                <option value="Nein">Nein</option>
             </select>
-            <div class="mt-2 row">
-                <div class="col-md-6">
-                    <select name="laptop_status" class="form-select">
-                        <option value="">Bestand oder neu?</option>
-                        <option>Bestand</option>
-                        <option>Neu</option>
-                    </select>
-                </div>
-                <div class="col-md-6">
-                    <input type="text" name="laptop_note" class="form-control" placeholder="Besonderheiten">
-                </div>
-                <div class="col-md-6 mt-2">
-                    <input type="date" name="laptop_ready_date" class="form-control" placeholder="Bereitgestellt am">
-                </div>
-                <div class="col-md-6 mt-2">
-                    <input type="text" name="laptop_ready_by" class="form-control" placeholder="Bereitgestellt von">
-                </div>
+        </div>
+
+        <div id="laptop_fields" style="display:none;">
+            <div class="mb-3">
+                <label class="form-label">Neu oder Bestand?</label>
+                <select class="form-select" name="laptop_type" id="laptop_type" onchange="toggleLaptopDetails()">
+                    <option value="">Bitte auswählen</option>
+                    <option value="Neu">Neu</option>
+                    <option value="Bestand">Bestand</option>
+                </select>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Besonderheiten</label>
+                <input type="text" class="form-control" name="laptop_notes">
+            </div>
+
+            <div class="mb-3" id="laptop_neu_fields" style="display:none;">
+                <label class="form-label">Wird bestellt von:</label>
+                <input type="text" class="form-control" name="laptop_ordered_by">
+            </div>
+
+            <div class="mb-3" id="laptop_bestand_fields" style="display:none;">
+                <label class="form-label">Bereitgestellt von:</label>
+                <input type="text" class="form-control" name="laptop_provided_by">
             </div>
         </div>
 
-        <!-- Handy -->
+        <!-- Weitere Geräte folgen analog wie oben -->
+        <!-- Beispiel: Handy -->
         <div class="mb-3">
-            <label class="form-label">Handy</label>
-            <select name="handy" class="form-select">
+            <label class="form-label">Handy benötigt?</label>
+            <select class="form-select" name="phone_needed" id="phone_needed" onchange="togglePhoneFields()">
                 <option value="">Bitte auswählen</option>
-                <option>Ja</option>
-                <option>Nein</option>
+                <option value="Ja">Ja</option>
+                <option value="Nein">Nein</option>
             </select>
-            <div class="mt-2 row">
-                <div class="col-md-4">
-                    <select name="handy_status" class="form-select">
-                        <option value="">Bestand oder neu?</option>
-                        <option>Bestand</option>
-                        <option>Neu</option>
-                    </select>
-                </div>
-                <div class="col-md-4">
-                    <input type="text" name="handy_number" class="form-control" placeholder="Handynummer">
-                </div>
-                <div class="col-md-4">
-                    <input type="date" name="handy_ready_date" class="form-control" placeholder="Bereitgestellt am">
-                </div>
-                <div class="col-md-6 mt-2">
-                    <input type="text" name="handy_ready_by" class="form-control" placeholder="Bereitgestellt von">
-                </div>
+        </div>
+
+        <div id="phone_fields" style="display:none;">
+            <div class="mb-3">
+                <label class="form-label">Neu oder Bestand?</label>
+                <select class="form-select" name="phone_type" id="phone_type" onchange="togglePhoneDetails()">
+                    <option value="">Bitte auswählen</option>
+                    <option value="Neu">Neu</option>
+                    <option value="Bestand">Bestand</option>
+                </select>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Handynummer</label>
+                <input type="text" class="form-control" name="phone_number">
+            </div>
+            <div class="mb-3" id="phone_neu_fields" style="display:none;">
+                <label class="form-label">Wird bestellt von:</label>
+                <input type="text" class="form-control" name="phone_ordered_by">
+            </div>
+            <div class="mb-3" id="phone_bestand_fields" style="display:none;">
+                <label class="form-label">Bereitgestellt von:</label>
+                <input type="text" class="form-control" name="phone_provided_by">
             </div>
         </div>
 
-        <!-- Headset -->
+        <!-- Software-Zugänge -->
+        <hr class="my-4">
+        <h4>Zugänge</h4>
+        {% for software in ["Server", "Zvoove", "MS Teams", "LapID", "absence.io"] %}
         <div class="mb-3">
-            <label class="form-label">Headset</label>
-            <select name="headset" class="form-select">
+            <label class="form-label">Zugang {{ software }} benötigt?</label>
+            <select class="form-select" name="access_{{ software|lower|replace('.', '') }}">
                 <option value="">Bitte auswählen</option>
-                <option>Ja</option>
-                <option>Nein</option>
+                <option value="Ja">Ja</option>
+                <option value="Nein">Nein</option>
             </select>
-        </div>
-
-        <!-- Monitore -->
-        <div class="mb-3">
-            <label class="form-label">Monitore</label>
-            <select name="monitors" class="form-select">
-                <option value="">Bitte auswählen</option>
-                <option>Ja</option>
-                <option>Nein</option>
-            </select>
-            <input type="number" name="monitor_count" class="form-control mt-2" placeholder="Anzahl">
-        </div>
-
-        <!-- Telefon -->
-        <div class="mb-3">
-            <label class="form-label">Telefon</label>
-            <select name="phone" class="form-select">
-                <option value="">Bitte auswählen</option>
-                <option>Ja</option>
-                <option>Nein</option>
-            </select>
-            <input type="text" name="phone_extension" class="form-control mt-2" placeholder="Durchwahl">
-        </div>
-
-        <!-- Drucker -->
-        <div class="mb-3">
-            <label class="form-label">Drucker</label>
-            <select name="printer" class="form-select">
-                <option value="">Bitte auswählen</option>
-                <option>Ja</option>
-                <option>Nein</option>
-            </select>
-            <div class="row mt-2">
-                <div class="col-md-6">
-                    <select name="printer_status" class="form-select">
-                        <option value="">Bestand oder neu?</option>
-                        <option>Bestand</option>
-                        <option>Neu</option>
-                    </select>
-                </div>
-                <div class="col-md-6">
-                    <input type="text" name="printer_note" class="form-control" placeholder="Besonderheiten">
-                </div>
-            </div>
-        </div>
-
-        <hr>
-
-        <h2 class="mt-4">Software-Zugänge</h2>
-
-        {% for software in ["Server", "Zvoove", "MS/Teams", "LapID", "absence.io"] %}
-        <div class="mb-3">
-            <label class="form-label">Zugang {{ software }}</label>
-            <select name="{{ software | lower | replace('.', '') }}_access" class="form-select">
-                <option value="">Bitte auswählen</option>
-                <option>Ja</option>
-                <option>Nein</option>
-            </select>
-            <div class="row mt-2">
-                <div class="col-md-6">
-                    <input type="date" name="{{ software | lower | replace('.', '') }}_created_date" class="form-control" placeholder="Angelegt am">
-                </div>
-                <div class="col-md-6">
-                    <input type="text" name="{{ software | lower | replace('.', '') }}_created_by" class="form-control" placeholder="Angelegt von">
-                </div>
-            </div>
         </div>
         {% endfor %}
 
-        <!-- E-Mail & Verteiler -->
+        <!-- Mailfelder -->
         <div class="mb-3">
-            <label class="form-label">Interne E-Mail-Adresse</label>
-            <input type="email" name="email_internal" class="form-control">
+            <label class="form-label">E-Mail-Adresse intern</label>
+            <input type="email" class="form-control" name="email_intern">
         </div>
-
         <div class="mb-3">
-            <label class="form-label">E-Mail-Verteiler</label>
-            <input type="text" name="email_distribution" class="form-control">
+            <label class="form-label">E-Mail Verteiler</label>
+            <input type="text" class="form-control" name="mail_distribution">
         </div>
-
         <div class="mb-3">
             <label class="form-label">Sonstige Mailverteiler</label>
-            <input type="text" name="email_other_distribution" class="form-control">
+            <input type="text" class="form-control" name="mail_distribution_other">
         </div>
-
         <div class="mb-3">
             <label class="form-label">Weiterleitung an</label>
-            <input type="text" name="email_forward" class="form-control">
+            <input type="text" class="form-control" name="forward_to">
         </div>
 
         <div class="d-flex justify-content-between mt-4">
@@ -173,4 +118,29 @@
         </div>
     </form>
 </div>
+
+<script>
+function toggleLaptopFields() {
+    const needed = document.getElementById("laptop_needed").value;
+    document.getElementById("laptop_fields").style.display = (needed === "Ja") ? "block" : "none";
+}
+
+function toggleLaptopDetails() {
+    const type = document.getElementById("laptop_type").value;
+    document.getElementById("laptop_neu_fields").style.display = (type === "Neu") ? "block" : "none";
+    document.getElementById("laptop_bestand_fields").style.display = (type === "Bestand") ? "block" : "none";
+}
+
+function togglePhoneFields() {
+    const needed = document.getElementById("phone_needed").value;
+    document.getElementById("phone_fields").style.display = (needed === "Ja") ? "block" : "none";
+}
+
+function togglePhoneDetails() {
+    const type = document.getElementById("phone_type").value;
+    document.getElementById("phone_neu_fields").style.display = (type === "Neu") ? "block" : "none";
+    document.getElementById("phone_bestand_fields").style.display = (type === "Bestand") ? "block" : "none";
+}
+</script>
 {% endblock %}
+
