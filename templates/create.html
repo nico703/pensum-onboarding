@@ -38,18 +38,17 @@
             <label for="email" class="form-label">E-Mail (privat)</label>
             <input type="email" class="form-control" id="email" name="email" required>
         </div>
-
+        
         <div class="mb-3">
-            <label for="department" class="form-label">Abteilung</label>
-            <select class="form-select" id="department" name="department" required>
-                <option value="">Bitte auswählen</option>
-                <option value="Pensum GmbH">Pensum GmbH</option>
-                <option value="High Potentials">High Potentials</option>
-                <option value="Fahrdienst">Fahrdienst</option>
-                <option value="MePeKo">MePeKo</option>
-                <option value="MePeKo Experts">MePeKo Experts</option>
-                <option value="Reinigung">Reinigung</option>
-            </select>
+            <label class="form-label">Abteilung</label>
+            <div>
+                {% for department in ['Pensum GmbH', 'High Potentials', 'Fahrdienst', 'MePeKo', 'MePeKo Experts', 'Reinigung'] %}
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" name="departments" value="{{ department }}" id="dep_{{ loop.index }}">
+                    <label class="form-check-label" for="dep_{{ loop.index }}">{{ department }}</label>
+                </div>
+                {% endfor %}
+            </div>
         </div>
 
         <div class="mb-3">
