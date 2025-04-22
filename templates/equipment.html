@@ -1,89 +1,166 @@
 {% extends "base.html" %}
-
-{% block title %}Equipment{% endblock %}
+{% block title %}IT & Ausstattung{% endblock %}
 
 {% block content %}
 <div class="container mt-5">
     <div class="progress mb-4" style="height: 25px;">
         <div class="progress-bar bg-success" role="progressbar" style="width: 60%;" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100">
-            Schritt 3 von 5 – Equipment
+            Schritt 3 von 5 – IT & Ausstattung
         </div>
     </div>
 
-    <h2>Hardware & Software</h2>
-    <form method="POST" action="{{ url_for('equipment', id=employee.id) }}" class="mt-4 bg-white p-4 rounded shadow-sm">
+    <h2>IT & Ausstattung</h2>
+    <form method="POST" class="mt-4 bg-white p-4 rounded shadow-sm">
 
-        <!-- Hardware -->
-        <h4>Hardware</h4>
-
-        {% set hardware_items = [
-            {'label': 'Laptop', 'name': 'laptop'},
-            {'label': 'Handy', 'name': 'phone'},
-            {'label': 'Headset', 'name': 'headset'},
-            {'label': 'Monitor', 'name': 'monitor'},
-            {'label': 'Telefon', 'name': 'telephone'},
-            {'label': 'Drucker', 'name': 'printer'}
-        ] %}
-
-        {% for item in hardware_items %}
+        <!-- Laptop -->
         <div class="mb-3">
-            <label class="form-label">{{ item.label }}</label>
-            <select class="form-select" name="{{ item.name }}" onchange="toggleDetail(this, '{{ item.name }}')">
+            <label class="form-label">Laptop benötigt?</label>
+            <select class="form-select" name="laptop" onchange="toggleLaptopDetails(this.value)">
                 <option value="">Bitte auswählen</option>
-                <option value="Ja">Ja</option>
                 <option value="Nein">Nein</option>
+                <option value="Ja">Ja</option>
             </select>
-            <div class="mt-2" id="detail-{{ item.name }}" style="display: none;">
-                <input type="text" class="form-control" name="{{ item.name }}_details" placeholder="Besonderheiten (z.B. MacBook)">
+        </div>
+
+        <div id="laptop-details" style="display:none;">
+            <div class="mb-3">
+                <label class="form-label">Laptop Typ</label>
+                <select class="form-select" name="laptop_type">
+                    <option value="">Bitte auswählen</option>
+                    <option value="Bestand">Bestand</option>
+                    <option value="Neu">Neu</option>
+                </select>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Besonderheiten</label>
+                <input type="text" class="form-control" name="laptop_notes" placeholder="z.B. Grafik-Laptop, MacBook, etc.">
             </div>
         </div>
-        {% endfor %}
+
+        <!-- Handy -->
+        <div class="mb-3">
+            <label class="form-label">Firmenhandy?</label>
+            <select class="form-select" name="phone" onchange="togglePhoneDetails(this.value)">
+                <option value="">Bitte auswählen</option>
+                <option value="Nein">Nein</option>
+                <option value="Ja">Ja</option>
+            </select>
+        </div>
+
+        <div id="phone-details" style="display:none;">
+            <div class="mb-3">
+                <label class="form-label">Handy Typ</label>
+                <select class="form-select" name="phone_type">
+                    <option value="">Bitte auswählen</option>
+                    <option value="Bestand">Bestand</option>
+                    <option value="Neu">Neu</option>
+                </select>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Handynummer</label>
+                <input type="text" class="form-control" name="phone_number">
+            </div>
+        </div>
+
+        <!-- Headset -->
+        <div class="mb-3">
+            <label class="form-label">Headset benötigt?</label>
+            <select class="form-select" name="headset">
+                <option value="">Bitte auswählen</option>
+                <option value="Nein">Nein</option>
+                <option value="Ja">Ja</option>
+            </select>
+        </div>
+
+        <!-- Monitor -->
+        <div class="mb-3">
+            <label class="form-label">Monitor(e)?</label>
+            <select class="form-select" name="monitor" onchange="toggleMonitorDetails(this.value)">
+                <option value="">Bitte auswählen</option>
+                <option value="Nein">Nein</option>
+                <option value="Ja">Ja</option>
+            </select>
+        </div>
+
+        <div id="monitor-details" style="display:none;">
+            <label class="form-label">Anzahl</label>
+            <input type="number" class="form-control" name="monitor_count" min="1">
+        </div>
+
+        <!-- Telefon -->
+        <div class="mb-3">
+            <label class="form-label">Telefon?</label>
+            <select class="form-select" name="phone_desk" onchange="togglePhoneDesk(this.value)">
+                <option value="">Bitte auswählen</option>
+                <option value="Nein">Nein</option>
+                <option value="Ja">Ja</option>
+            </select>
+        </div>
+
+        <div id="phone-desk-details" style="display:none;">
+            <label class="form-label">Durchwahl</label>
+            <input type="text" class="form-control" name="phone_extension">
+        </div>
+
+        <!-- Drucker -->
+        <div class="mb-3">
+            <label class="form-label">Zugang zu Drucker?</label>
+            <select class="form-select" name="printer" onchange="togglePrinterDetails(this.value)">
+                <option value="">Bitte auswählen</option>
+                <option value="Nein">Nein</option>
+                <option value="Ja">Ja</option>
+            </select>
+        </div>
+
+        <div id="printer-details" style="display:none;">
+            <div class="mb-3">
+                <label class="form-label">Drucker Typ</label>
+                <select class="form-select" name="printer_type">
+                    <option value="">Bitte auswählen</option>
+                    <option value="Bestand">Bestand</option>
+                    <option value="Neu">Neu</option>
+                </select>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Besonderheiten</label>
+                <input type="text" class="form-control" name="printer_notes">
+            </div>
+        </div>
 
         <hr class="my-4">
 
-        <!-- Software -->
-        <h4>Software</h4>
+        <h4>Zugänge & Software</h4>
 
-        {% set software_items = [
-            {'label': 'Zugang Server', 'name': 'server_access'},
-            {'label': 'Zugang Zvoove', 'name': 'zvoove_access'},
-            {'label': 'Zugang MS/Teams', 'name': 'teams_access'},
-            {'label': 'Zugang LapID', 'name': 'lapid_access'},
-            {'label': 'Zugang absence.io', 'name': 'absence_access'}
-        ] %}
-
-        {% for software in software_items %}
-        <div class="mb-3">
-            <label class="form-label">{{ software.label }}</label>
-            <select class="form-select" name="{{ software.name }}">
-                <option value="">Bitte auswählen</option>
-                <option value="Ja">Ja</option>
-                <option value="Nein">Nein</option>
-            </select>
+        {% for software in ['Server', 'Zvoove', 'MS Teams', 'LapID', 'absence.io'] %}
+        <div class="form-check mb-2">
+            <input class="form-check-input" type="checkbox" value="Ja" id="software_{{ loop.index }}" name="software_{{ software }}">
+            <label class="form-check-label" for="software_{{ loop.index }}">
+                Zugang {{ software }}
+            </label>
         </div>
         {% endfor %}
 
-        <div class="mb-3">
-            <label class="form-label">E-Mail-Adresse (intern)</label>
+        <div class="mb-3 mt-3">
+            <label class="form-label">E-Mail-Adresse intern</label>
             <input type="email" class="form-control" name="email_internal">
         </div>
 
         <div class="mb-3">
             <label class="form-label">E-Mail-Verteiler</label>
-            <input type="text" class="form-control" name="email_distribution">
+            <input type="text" class="form-control" name="mail_group">
         </div>
 
         <div class="mb-3">
-            <label class="form-label">Weitere Mailverteiler</label>
-            <input type="text" class="form-control" name="email_other">
+            <label class="form-label">Sonstige Mailverteiler</label>
+            <input type="text" class="form-control" name="mail_other_groups">
         </div>
 
         <div class="mb-3">
             <label class="form-label">Weiterleitung an</label>
-            <input type="email" class="form-control" name="email_forward">
+            <input type="email" class="form-control" name="forward_to">
         </div>
 
-        <div class="d-flex justify-content-between mt-4">
+        <div class="d-flex justify-content-between">
             <a href="{{ url_for('contract_details', id=employee.id) }}" class="btn btn-secondary">Zurück</a>
             <button type="submit" class="btn btn-success">Weiter</button>
         </div>
@@ -91,10 +168,21 @@
 </div>
 
 <script>
-    function toggleDetail(select, name) {
-        const detailField = document.getElementById('detail-' + name);
-        detailField.style.display = (select.value === 'Ja') ? 'block' : 'none';
-    }
+function toggleLaptopDetails(value) {
+    document.getElementById("laptop-details").style.display = value === "Ja" ? "block" : "none";
+}
+function togglePhoneDetails(value) {
+    document.getElementById("phone-details").style.display = value === "Ja" ? "block" : "none";
+}
+function toggleMonitorDetails(value) {
+    document.getElementById("monitor-details").style.display = value === "Ja" ? "block" : "none";
+}
+function togglePhoneDesk(value) {
+    document.getElementById("phone-desk-details").style.display = value === "Ja" ? "block" : "none";
+}
+function togglePrinterDetails(value) {
+    document.getElementById("printer-details").style.display = value === "Ja" ? "block" : "none";
+}
 </script>
 {% endblock %}
 
