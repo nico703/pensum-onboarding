@@ -27,7 +27,7 @@ def create():
         birthdate = datetime.strptime(birthdate_str, "%Y-%m-%d").date() if birthdate_str else None
         address = request.form.get("address")
         mobile = request.form.get("mobile")
-        department = request.form.getlist["department"]
+        department = request.form.getlist("department")
         start_date_str = request.form["start_date"]
         start_date = datetime.strptime(start_date_str, "%Y-%m-%d").date() if start_date_str else None
 
