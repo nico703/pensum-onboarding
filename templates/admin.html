@@ -23,6 +23,34 @@
     </div>
 </div>
 
+<h3 class="mt-5">Organisation</h3>
+<ul class="list-group">
+    <li class="list-group-item">
+        <strong>Schlüssel / Chip:</strong> {{ employee.schlüssel_chip or 'Nein' }}
+    </li>
+    <li class="list-group-item">
+        <strong>Parkplatz:</strong> {{ employee.parkplatz or 'Nein' }}
+    </li>
+    <li class="list-group-item">
+        <strong>Dienstwagen (PKW):</strong> {{ employee.pkw or 'Nein' }}
+    </li>
+    <li class="list-group-item">
+        <strong>Tankkarte:</strong> {{ employee.tankkarte or 'Nein' }}
+    </li>
+    {% if employee.tankkarte == 'Ja' %}
+    <li class="list-group-item">
+        <strong>Tankkartennummer:</strong> 
+        <input type="text" name="tankkarten_nummer" value="{{ employee.tankkarten_nummer or '' }}" class="form-control">
+    </li>
+    {% endif %}
+    <li class="list-group-item">
+        <strong>DSGVO-Schulung:</strong> {{ employee.dsgvo_schulung or 'Nein' }}
+    </li>
+    <li class="list-group-item">
+        <strong>Visitenkarten:</strong> {{ employee.visitenkarten or 'Nein' }}
+    </li>
+</ul>
+
 <h4>Zuletzt erstellt</h4>
 <table class="table table-striped bg-white shadow-sm">
     <thead>

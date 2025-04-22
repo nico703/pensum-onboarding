@@ -27,11 +27,18 @@
 
         <div class="mb-3">
             <label for="tankkarte" class="form-label">Tankkarte</label>
-            <select class="form-select" name="tankkarte" id="tankkarte">
+            <select class="form-select" name="tankkarte" id="tankkarte" onchange="toggleTankkarteDetails(this.value)">
                 <option value="">Bitte auswählen</option>
                 <option value="Ja">Ja</option>
                 <option value="Nein">Nein</option>
             </select>
+        </div>
+
+        <div id="tankkarte-details" style="display:none;">
+            <div class="mb-3">
+                <label for="tankkarten_nummer" class="form-label">Tankkartennummer</label>
+                <input type="text" class="form-control" name="tankkarten_nummer" id="tankkarten_nummer" placeholder="Wird später im Admin gepflegt">
+            </div>
         </div>
 
         <div class="form-check mb-2">
@@ -45,7 +52,15 @@
         </div>
     </fieldset>
 
-    <button type="submit" class="btn btn-success">Weiter</button>
-    <a href="{{ url_for('equipment', id=employee.id) }}" class="btn btn-secondary">Zurück</a>
+    <div class="d-flex justify-content-between">
+        <a href="{{ url_for('equipment', id=employee.id) }}" class="btn btn-secondary">Zurück</a>
+        <button type="submit" class="btn btn-success">Weiter</button>
+    </div>
 </form>
+
+<script>
+    function toggleTankkarteDetails(value) {
+        document.getElementById("tankkarte-details").style.display = value === "Ja" ? "block" : "none";
+    }
+</script>
 {% endblock %}
