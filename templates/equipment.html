@@ -1,41 +1,174 @@
 {% extends "base.html" %}
 
-{% block title %}Ausstattung / IT{% endblock %}
+{% block title %}Equipment & Zugänge{% endblock %}
 
 {% block content %}
 <div class="container mt-5">
-    <!-- Fortschrittsleiste -->
     <div class="progress mb-4" style="height: 25px;">
         <div class="progress-bar bg-success" role="progressbar" style="width: 60%;" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100">
-            Schritt 3 von 5 – Ausstattung / IT
+            Schritt 3 von 5 – Equipment & Software
         </div>
     </div>
 
-    <h2>Ausstattung / IT</h2>
-    <form method="POST" action="{{ url_for('equipment') }}" class="mt-4 bg-white p-4 rounded shadow-sm">
-        <div class="form-check mb-2">
-            <input class="form-check-input" type="checkbox" id="laptop" name="laptop">
-            <label class="form-check-label" for="laptop">Laptop</label>
-        </div>
-        <div class="form-check mb-2">
-            <input class="form-check-input" type="checkbox" id="handy" name="handy">
-            <label class="form-check-label" for="handy">Handy</label>
-        </div>
-        <div class="form-check mb-2">
-            <input class="form-check-input" type="checkbox" id="headset" name="headset">
-            <label class="form-check-label" for="headset">Headset</label>
-        </div>
-        <div class="form-check mb-2">
-            <input class="form-check-input" type="checkbox" id="monitors" name="monitors">
-            <label class="form-check-label" for="monitors">Monitore</label>
-        </div>
-        <div class="form-check mb-4">
-            <input class="form-check-input" type="checkbox" id="access_email" name="access_email">
-            <label class="form-check-label" for="access_email">E-Mail-Zugang</label>
+    <h2>Hardware</h2>
+    <form method="POST" action="{{ url_for('equipment', id=employee.id) }}" class="bg-white p-4 rounded shadow-sm">
+
+        <!-- Laptop -->
+        <div class="mb-3">
+            <label class="form-label">Laptop</label>
+            <select name="laptop" class="form-select">
+                <option value="">Bitte auswählen</option>
+                <option>Ja</option>
+                <option>Nein</option>
+            </select>
+            <div class="mt-2 row">
+                <div class="col-md-6">
+                    <select name="laptop_status" class="form-select">
+                        <option value="">Bestand oder neu?</option>
+                        <option>Bestand</option>
+                        <option>Neu</option>
+                    </select>
+                </div>
+                <div class="col-md-6">
+                    <input type="text" name="laptop_note" class="form-control" placeholder="Besonderheiten">
+                </div>
+                <div class="col-md-6 mt-2">
+                    <input type="date" name="laptop_ready_date" class="form-control" placeholder="Bereitgestellt am">
+                </div>
+                <div class="col-md-6 mt-2">
+                    <input type="text" name="laptop_ready_by" class="form-control" placeholder="Bereitgestellt von">
+                </div>
+            </div>
         </div>
 
-        <div class="d-flex justify-content-between">
-            <a href="{{ url_for('contract_details') }}" class="btn btn-secondary">Zurück</a>
+        <!-- Handy -->
+        <div class="mb-3">
+            <label class="form-label">Handy</label>
+            <select name="handy" class="form-select">
+                <option value="">Bitte auswählen</option>
+                <option>Ja</option>
+                <option>Nein</option>
+            </select>
+            <div class="mt-2 row">
+                <div class="col-md-4">
+                    <select name="handy_status" class="form-select">
+                        <option value="">Bestand oder neu?</option>
+                        <option>Bestand</option>
+                        <option>Neu</option>
+                    </select>
+                </div>
+                <div class="col-md-4">
+                    <input type="text" name="handy_number" class="form-control" placeholder="Handynummer">
+                </div>
+                <div class="col-md-4">
+                    <input type="date" name="handy_ready_date" class="form-control" placeholder="Bereitgestellt am">
+                </div>
+                <div class="col-md-6 mt-2">
+                    <input type="text" name="handy_ready_by" class="form-control" placeholder="Bereitgestellt von">
+                </div>
+            </div>
+        </div>
+
+        <!-- Headset -->
+        <div class="mb-3">
+            <label class="form-label">Headset</label>
+            <select name="headset" class="form-select">
+                <option value="">Bitte auswählen</option>
+                <option>Ja</option>
+                <option>Nein</option>
+            </select>
+        </div>
+
+        <!-- Monitore -->
+        <div class="mb-3">
+            <label class="form-label">Monitore</label>
+            <select name="monitors" class="form-select">
+                <option value="">Bitte auswählen</option>
+                <option>Ja</option>
+                <option>Nein</option>
+            </select>
+            <input type="number" name="monitor_count" class="form-control mt-2" placeholder="Anzahl">
+        </div>
+
+        <!-- Telefon -->
+        <div class="mb-3">
+            <label class="form-label">Telefon</label>
+            <select name="phone" class="form-select">
+                <option value="">Bitte auswählen</option>
+                <option>Ja</option>
+                <option>Nein</option>
+            </select>
+            <input type="text" name="phone_extension" class="form-control mt-2" placeholder="Durchwahl">
+        </div>
+
+        <!-- Drucker -->
+        <div class="mb-3">
+            <label class="form-label">Drucker</label>
+            <select name="printer" class="form-select">
+                <option value="">Bitte auswählen</option>
+                <option>Ja</option>
+                <option>Nein</option>
+            </select>
+            <div class="row mt-2">
+                <div class="col-md-6">
+                    <select name="printer_status" class="form-select">
+                        <option value="">Bestand oder neu?</option>
+                        <option>Bestand</option>
+                        <option>Neu</option>
+                    </select>
+                </div>
+                <div class="col-md-6">
+                    <input type="text" name="printer_note" class="form-control" placeholder="Besonderheiten">
+                </div>
+            </div>
+        </div>
+
+        <hr>
+
+        <h2 class="mt-4">Software-Zugänge</h2>
+
+        {% for software in ["Server", "Zvoove", "MS/Teams", "LapID", "absence.io"] %}
+        <div class="mb-3">
+            <label class="form-label">Zugang {{ software }}</label>
+            <select name="{{ software | lower | replace('.', '') }}_access" class="form-select">
+                <option value="">Bitte auswählen</option>
+                <option>Ja</option>
+                <option>Nein</option>
+            </select>
+            <div class="row mt-2">
+                <div class="col-md-6">
+                    <input type="date" name="{{ software | lower | replace('.', '') }}_created_date" class="form-control" placeholder="Angelegt am">
+                </div>
+                <div class="col-md-6">
+                    <input type="text" name="{{ software | lower | replace('.', '') }}_created_by" class="form-control" placeholder="Angelegt von">
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+
+        <!-- E-Mail & Verteiler -->
+        <div class="mb-3">
+            <label class="form-label">Interne E-Mail-Adresse</label>
+            <input type="email" name="email_internal" class="form-control">
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">E-Mail-Verteiler</label>
+            <input type="text" name="email_distribution" class="form-control">
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Sonstige Mailverteiler</label>
+            <input type="text" name="email_other_distribution" class="form-control">
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Weiterleitung an</label>
+            <input type="text" name="email_forward" class="form-control">
+        </div>
+
+        <div class="d-flex justify-content-between mt-4">
+            <a href="{{ url_for('contract_details', id=employee.id) }}" class="btn btn-secondary">Zurück</a>
             <button type="submit" class="btn btn-success">Weiter</button>
         </div>
     </form>
