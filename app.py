@@ -37,7 +37,7 @@ def create():
             birthdate=birthdate,
             address=address,
             mobile=mobile,
-            department=department,
+            department=','.join(department),
             start_date=start_date
         )
         db.session.add(new_emp)
