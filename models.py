@@ -5,45 +5,27 @@ db = SQLAlchemy()
 
 class Employee(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    fullname = db.Column(db.String(100), nullable=False)
-    email = db.Column(db.String(120), nullable=False)
-    department = db.Column(db.String(100))
-    start_date = db.Column(db.Date)
-    is_active = db.Column(db.Boolean, default=True)
 
-    # Neue Vertragsdetails
-    position = db.Column(db.String(100))
-    location = db.Column(db.String(100))
-    employment_type = db.Column(db.String(50))
-    vacation_days = db.Column(db.Integer)
-    homeoffice = db.Column(db.String(10))
-    homeoffice_detail = db.Column(db.String(50))
-
-    # Optional: Weitere persönliche Daten
-    birthdate = db.Column(db.Date)
-    address = db.Column(db.String(200))
-    mobile = db.Column(db.String(50))
-
-    # Step 1: Personendaten
+    # Persönliche Daten
     fullname = db.Column(db.String(100), nullable=False)
     birthdate = db.Column(db.Date)
     address = db.Column(db.String(200))
     mobile = db.Column(db.String(20))
     private_email = db.Column(db.String(120))
 
-    # Step 2: Vertragsdetails
-    department = db.Column(db.String(100))
+    # Vertragsdaten
+    department = db.Column(db.Text)  # falls Mehrfachauswahl: CSV oder Liste
     start_date = db.Column(db.Date)
     end_date = db.Column(db.Date)
-    location = db.Column(db.String(100))
     contact_person = db.Column(db.String(100))
+    location = db.Column(db.String(100))
     position = db.Column(db.String(100))
     employment_type = db.Column(db.String(50))
     vacation_days = db.Column(db.Integer)
     homeoffice = db.Column(db.String(10))
     homeoffice_detail = db.Column(db.String(50))
 
-    # Step 3: Ausstattung
+    # IT & Ausstattung
     laptop = db.Column(db.String(50))
     laptop_source = db.Column(db.String(50))
     laptop_special = db.Column(db.String(200))
@@ -53,7 +35,6 @@ class Employee(db.Model):
     laptop_returned_to = db.Column(db.String(100))
 
     phone = db.Column(db.String(50))
-    phone_number = db.Column(db.String(50))
     phone_source = db.Column(db.String(50))
     phone_ordered_on = db.Column(db.Date)
     phone_ordered_by = db.Column(db.String(100))
@@ -69,23 +50,28 @@ class Employee(db.Model):
     printer_source = db.Column(db.String(50))
     printer_special = db.Column(db.String(200))
 
-    # Step 3: Software / Zugänge
+    # Software / Zugänge
     access_server = db.Column(db.Boolean, default=False)
     access_zvoove = db.Column(db.Boolean, default=False)
     access_teams = db.Column(db.Boolean, default=False)
     access_lapid = db.Column(db.Boolean, default=False)
     access_absence = db.Column(db.Boolean, default=False)
-    email_internal = db.Column(db.Boolean, default=False)
-    email_distribution = db.Column(db.Boolean, default=False)
+    email_internal = db.Column(db.String(120))
+    email_distribution = db.Column(db.String(120))
+    email_distribution_other = db.Column(db.String(120))
+    email_forward_to = db.Column(db.String(120))
 
-    # Step 4: Organisatorisches
+    # Organisation
     access_card = db.Column(db.Boolean, default=False)
     parking_space = db.Column(db.Boolean, default=False)
     keys = db.Column(db.Boolean, default=False)
     locker = db.Column(db.Boolean, default=False)
-    introduction_scheduled = db.Column(db.Date)
+    tankkarte = db.Column(db.String(10))
+    tankkarten_nummer = db.Column(db.String(50))
+    dsgvo_schulung = db.Column(db.Boolean, default=False)
+    visitenkarten = db.Column(db.Boolean, default=False)
 
-    # Step 5: Einarbeitung
+    # Einarbeitung
     welcome_mail_sent = db.Column(db.Boolean, default=False)
     welcome_package_ready = db.Column(db.Boolean, default=False)
     training_plan_created = db.Column(db.Boolean, default=False)
@@ -93,3 +79,4 @@ class Employee(db.Model):
 
     # Sonstiges
     notes = db.Column(db.Text)
+    is_active = db.Column(db.Boolean, default=True)
