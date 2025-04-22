@@ -22,7 +22,7 @@ def index():
 def create():
     if request.method == "POST":
         fullname = request.form["fullname"]
-        email = request.form["email"]
+        private_email = request.form["email"]  # Wenn dein Formular-Feld weiterhin "email" heißt
         birthdate_str = request.form.get("birthdate")
         birthdate = datetime.strptime(birthdate_str, "%Y-%m-%d").date() if birthdate_str else None
         address = request.form.get("address")
@@ -33,7 +33,7 @@ def create():
 
         new_emp = Employee(
             fullname=fullname,
-            email=email,
+            private_email=private_email,  # <- hier angepasst
             birthdate=birthdate,
             address=address,
             mobile=mobile,
