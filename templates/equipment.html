@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% block title %}Equipment{% endblock %}
+{% block title %}IT & Ausstattung{% endblock %}
 
 {% block content %}
 <div class="container mt-5">
@@ -11,108 +11,156 @@
 
     <h2>IT & Ausstattung</h2>
     <form method="POST" class="mt-4 bg-white p-4 rounded shadow-sm">
+
         <!-- Laptop -->
         <div class="mb-3">
             <label class="form-label">Laptop benötigt?</label>
-            <select class="form-select" name="laptop_needed" id="laptop_needed" onchange="toggleLaptopFields()">
+            <select class="form-select" name="laptop" onchange="toggleLaptopDetails(this.value)">
                 <option value="">Bitte auswählen</option>
-                <option value="Ja">Ja</option>
                 <option value="Nein">Nein</option>
+                <option value="Ja">Ja</option>
             </select>
         </div>
 
-        <div id="laptop_fields" style="display:none;">
+        <div id="laptop-details" style="display:none;">
             <div class="mb-3">
-                <label class="form-label">Neu oder Bestand?</label>
-                <select class="form-select" name="laptop_type" id="laptop_type" onchange="toggleLaptopDetails()">
+                <label class="form-label">Laptop Typ</label>
+                <select class="form-select" name="laptop_type">
                     <option value="">Bitte auswählen</option>
-                    <option value="Neu">Neu</option>
                     <option value="Bestand">Bestand</option>
+                    <option value="Neu">Neu</option>
                 </select>
             </div>
             <div class="mb-3">
                 <label class="form-label">Besonderheiten</label>
-                <input type="text" class="form-control" name="laptop_notes">
-            </div>
-
-            <div class="mb-3" id="laptop_neu_fields" style="display:none;">
-                <label class="form-label">Wird bestellt von:</label>
-                <input type="text" class="form-control" name="laptop_ordered_by">
-            </div>
-
-            <div class="mb-3" id="laptop_bestand_fields" style="display:none;">
-                <label class="form-label">Bereitgestellt von:</label>
-                <input type="text" class="form-control" name="laptop_provided_by">
+                <input type="text" class="form-control" name="laptop_notes" placeholder="z.B. Grafik-Laptop, MacBook, etc.">
             </div>
         </div>
 
-        <!-- Weitere Geräte folgen analog wie oben -->
-        <!-- Beispiel: Handy -->
+        <!-- Handy -->
         <div class="mb-3">
-            <label class="form-label">Handy benötigt?</label>
-            <select class="form-select" name="phone_needed" id="phone_needed" onchange="togglePhoneFields()">
+            <label class="form-label">Firmenhandy?</label>
+            <select class="form-select" name="phone" onchange="togglePhoneDetails(this.value)">
                 <option value="">Bitte auswählen</option>
-                <option value="Ja">Ja</option>
                 <option value="Nein">Nein</option>
+                <option value="Ja">Ja</option>
             </select>
         </div>
 
-        <div id="phone_fields" style="display:none;">
+        <div id="phone-details" style="display:none;">
             <div class="mb-3">
-                <label class="form-label">Neu oder Bestand?</label>
-                <select class="form-select" name="phone_type" id="phone_type" onchange="togglePhoneDetails()">
+                <label class="form-label">Handy Typ</label>
+                <select class="form-select" name="phone_type">
                     <option value="">Bitte auswählen</option>
-                    <option value="Neu">Neu</option>
                     <option value="Bestand">Bestand</option>
+                    <option value="Neu">Neu</option>
                 </select>
             </div>
             <div class="mb-3">
                 <label class="form-label">Handynummer</label>
                 <input type="text" class="form-control" name="phone_number">
             </div>
-            <div class="mb-3" id="phone_neu_fields" style="display:none;">
-                <label class="form-label">Wird bestellt von:</label>
-                <input type="text" class="form-control" name="phone_ordered_by">
+        </div>
+
+        <!-- Headset -->
+        <div class="mb-3">
+            <label class="form-label">Headset benötigt?</label>
+            <select class="form-select" name="headset">
+                <option value="">Bitte auswählen</option>
+                <option value="Nein">Nein</option>
+                <option value="Ja">Ja</option>
+            </select>
+        </div>
+
+        <!-- Monitor -->
+        <div class="mb-3">
+            <label class="form-label">Monitor(e)?</label>
+            <select class="form-select" name="monitor" onchange="toggleMonitorDetails(this.value)">
+                <option value="">Bitte auswählen</option>
+                <option value="Nein">Nein</option>
+                <option value="Ja">Ja</option>
+            </select>
+        </div>
+
+        <div id="monitor-details" style="display:none;">
+            <label class="form-label">Anzahl</label>
+            <input type="number" class="form-control" name="monitor_count" min="1">
+        </div>
+
+        <!-- Telefon -->
+        <div class="mb-3">
+            <label class="form-label">Telefon?</label>
+            <select class="form-select" name="phone_desk" onchange="togglePhoneDesk(this.value)">
+                <option value="">Bitte auswählen</option>
+                <option value="Nein">Nein</option>
+                <option value="Ja">Ja</option>
+            </select>
+        </div>
+
+        <div id="phone-desk-details" style="display:none;">
+            <label class="form-label">Durchwahl</label>
+            <input type="text" class="form-control" name="phone_extension">
+        </div>
+
+        <!-- Drucker -->
+        <div class="mb-3">
+            <label class="form-label">Zugang zu Drucker?</label>
+            <select class="form-select" name="printer" onchange="togglePrinterDetails(this.value)">
+                <option value="">Bitte auswählen</option>
+                <option value="Nein">Nein</option>
+                <option value="Ja">Ja</option>
+            </select>
+        </div>
+
+        <div id="printer-details" style="display:none;">
+            <div class="mb-3">
+                <label class="form-label">Drucker Typ</label>
+                <select class="form-select" name="printer_type">
+                    <option value="">Bitte auswählen</option>
+                    <option value="Bestand">Bestand</option>
+                    <option value="Neu">Neu</option>
+                </select>
             </div>
-            <div class="mb-3" id="phone_bestand_fields" style="display:none;">
-                <label class="form-label">Bereitgestellt von:</label>
-                <input type="text" class="form-control" name="phone_provided_by">
+            <div class="mb-3">
+                <label class="form-label">Besonderheiten</label>
+                <input type="text" class="form-control" name="printer_notes">
             </div>
         </div>
 
-        <!-- Software-Zugänge -->
         <hr class="my-4">
-        <h4>Zugänge</h4>
-        {% for software in ["Server", "Zvoove", "MS Teams", "LapID", "absence.io"] %}
-        <div class="mb-3">
-            <label class="form-label">Zugang {{ software }} benötigt?</label>
-            <select class="form-select" name="access_{{ software|lower|replace('.', '') }}">
-                <option value="">Bitte auswählen</option>
-                <option value="Ja">Ja</option>
-                <option value="Nein">Nein</option>
-            </select>
+
+        <h4>Zugänge & Software</h4>
+
+        {% for software in ['Server', 'Zvoove', 'MS Teams', 'LapID', 'absence.io'] %}
+        <div class="form-check mb-2">
+            <input class="form-check-input" type="checkbox" value="Ja" id="software_{{ loop.index }}" name="software_{{ software }}">
+            <label class="form-check-label" for="software_{{ loop.index }}">
+                Zugang {{ software }}
+            </label>
         </div>
         {% endfor %}
 
-        <!-- Mailfelder -->
-        <div class="mb-3">
+        <div class="mb-3 mt-3">
             <label class="form-label">E-Mail-Adresse intern</label>
-            <input type="email" class="form-control" name="email_intern">
-        </div>
-        <div class="mb-3">
-            <label class="form-label">E-Mail Verteiler</label>
-            <input type="text" class="form-control" name="mail_distribution">
-        </div>
-        <div class="mb-3">
-            <label class="form-label">Sonstige Mailverteiler</label>
-            <input type="text" class="form-control" name="mail_distribution_other">
-        </div>
-        <div class="mb-3">
-            <label class="form-label">Weiterleitung an</label>
-            <input type="text" class="form-control" name="forward_to">
+            <input type="email" class="form-control" name="email_internal">
         </div>
 
-        <div class="d-flex justify-content-between mt-4">
+        <div class="mb-3">
+            <label class="form-label">E-Mail-Verteiler</label>
+            <input type="text" class="form-control" name="mail_group">
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Sonstige Mailverteiler</label>
+            <input type="text" class="form-control" name="mail_other_groups">
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Weiterleitung an</label>
+            <input type="email" class="form-control" name="forward_to">
+        </div>
+
+        <div class="d-flex justify-content-between">
             <a href="{{ url_for('contract_details', id=employee.id) }}" class="btn btn-secondary">Zurück</a>
             <button type="submit" class="btn btn-success">Weiter</button>
         </div>
@@ -120,26 +168,20 @@
 </div>
 
 <script>
-function toggleLaptopFields() {
-    const needed = document.getElementById("laptop_needed").value;
-    document.getElementById("laptop_fields").style.display = (needed === "Ja") ? "block" : "none";
+function toggleLaptopDetails(value) {
+    document.getElementById("laptop-details").style.display = value === "Ja" ? "block" : "none";
 }
-
-function toggleLaptopDetails() {
-    const type = document.getElementById("laptop_type").value;
-    document.getElementById("laptop_neu_fields").style.display = (type === "Neu") ? "block" : "none";
-    document.getElementById("laptop_bestand_fields").style.display = (type === "Bestand") ? "block" : "none";
+function togglePhoneDetails(value) {
+    document.getElementById("phone-details").style.display = value === "Ja" ? "block" : "none";
 }
-
-function togglePhoneFields() {
-    const needed = document.getElementById("phone_needed").value;
-    document.getElementById("phone_fields").style.display = (needed === "Ja") ? "block" : "none";
+function toggleMonitorDetails(value) {
+    document.getElementById("monitor-details").style.display = value === "Ja" ? "block" : "none";
 }
-
-function togglePhoneDetails() {
-    const type = document.getElementById("phone_type").value;
-    document.getElementById("phone_neu_fields").style.display = (type === "Neu") ? "block" : "none";
-    document.getElementById("phone_bestand_fields").style.display = (type === "Bestand") ? "block" : "none";
+function togglePhoneDesk(value) {
+    document.getElementById("phone-desk-details").style.display = value === "Ja" ? "block" : "none";
+}
+function togglePrinterDetails(value) {
+    document.getElementById("printer-details").style.display = value === "Ja" ? "block" : "none";
 }
 </script>
 {% endblock %}
