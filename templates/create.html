@@ -1,10 +1,7 @@
 {% extends "base.html" %}
-
 {% block title %}Neuer Mitarbeitender{% endblock %}
-
 {% block content %}
 <div class="container mt-5">
-    <!-- Fortschrittsleiste -->
     <div class="progress mb-4" style="height: 25px;">
         <div class="progress-bar bg-success" role="progressbar" style="width: 20%;" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">
             Schritt 1 von 5 – Personaldaten
@@ -13,9 +10,8 @@
 
     <h2>Personaldaten</h2>
     <form method="POST" action="{{ url_for('create') }}" class="mt-4 bg-white p-4 rounded shadow-sm">
-        
         <div class="mb-3">
-            <label for="fullname" class="form-label">Vollständiger Name</label>
+            <label for="fullname" class="form-label">Vollständiger Name *</label>
             <input type="text" class="form-control" id="fullname" name="fullname" required>
         </div>
 
@@ -35,16 +31,16 @@
         </div>
 
         <div class="mb-3">
-            <label for="email" class="form-label">E-Mail (privat)</label>
+            <label for="email" class="form-label">E-Mail (privat) *</label>
             <input type="email" class="form-control" id="email" name="email" required>
         </div>
-        
+
         <div class="mb-3">
-            <label class="form-label">Abteilung</label>
+            <label class="form-label">Abteilung *</label>
             <div>
                 {% for department in ['Pensum GmbH', 'High Potentials', 'Fahrdienst', 'MePeKo', 'MePeKo Experts', 'Reinigung'] %}
                 <div class="form-check">
-                    <input class="form-check-input" type="checkbox" name="department" value="{{ department }}" id="dep_{{ loop.index }}">
+                    <input class="form-check-input" type="checkbox" name="departments" value="{{ department }}" id="dep_{{ loop.index }}" required>
                     <label class="form-check-label" for="dep_{{ loop.index }}">{{ department }}</label>
                 </div>
                 {% endfor %}
@@ -52,7 +48,7 @@
         </div>
 
         <div class="mb-3">
-            <label for="start_date" class="form-label">Startdatum</label>
+            <label for="start_date" class="form-label">Startdatum *</label>
             <input type="date" class="form-control" id="start_date" name="start_date" required>
         </div>
 

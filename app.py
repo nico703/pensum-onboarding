@@ -22,7 +22,7 @@ def index():
 def create():
     if request.method == "POST":
         fullname = request.form["fullname"]
-        private_email = request.form["email"]  # Wenn dein Formular-Feld weiterhin "email" heißt
+        email = request.form["email"]
         birthdate_str = request.form.get("birthdate")
         birthdate = datetime.strptime(birthdate_str, "%Y-%m-%d").date() if birthdate_str else None
         address = request.form.get("address")
@@ -33,7 +33,7 @@ def create():
 
         new_emp = Employee(
             fullname=fullname,
-            private_email=private_email,  # <- hier angepasst
+            email=email,
             birthdate=birthdate,
             address=address,
             mobile=mobile,
@@ -78,17 +78,17 @@ def organization(id):
     employee = Employee.query.get_or_404(id)
     if request.method == "POST":
         # Organisationsdaten speichern
-        return redirect(url_for("onboarding_final", id=id))
+        return redirect(url_for("summary", id=id))
     return render_template("organization.html", employee=employee)
 
-# Step 5: Einarbeitung
-@app.route("/final/<int:id>", methods=["GET", "POST"])
-def onboarding_final(id):
+# Zusammenfassung
+@app.route("/summary/<int:id>", methods=["GET", "POST"])
+def summary(id):
     employee = Employee.query.get_or_404(id)
     if request.method == "POST":
-        # Einarbeitungsdaten speichern
+        # Onboarding abschließen und Aufgaben an Abteilungen weiterleiten
         return redirect(url_for("index"))
-    return render_template("onboarding_final.html", employee=employee)
+    return render_template("summary.html", employee=employee)
 
 # Offboarding
 @app.route("/offboard/<int:id>")
@@ -110,7 +110,7 @@ def admin():
 def about_dev():
     return {
         "crafted_by": "Nico",
-        "powered_by": "Pensum – Onboarding",
+        "powered_by": "HoodIQ",
         "message": "Guck, Guck"
     }
 
